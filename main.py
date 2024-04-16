@@ -1,5 +1,6 @@
 import os
 import requests
+import argparse
 from urllib.parse import urlparse
 from dotenv import load_dotenv
 
@@ -43,7 +44,10 @@ def main():
     load_dotenv()
     token = os.environ["BITLY_TOKEN"]
     headers = {"Authorization": f"Bearer {token}"}
-    user_url = input("Введите ссылку: ")
+    parser = argparse.ArgumentParser(description='Application creates short links')
+    parser.add_argument('url', help='Your link')
+    args = parser.parse_args()
+    user_url = args.url
     if is_bitlink(user_url, headers):
         try:
             count = count_clicks(user_url, headers)
